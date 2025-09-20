@@ -1,8 +1,8 @@
 package com.sporty.f1bet.infrastructure.provider;
 
 import com.sporty.f1bet.application.provider.Provider;
-import org.springframework.stereotype.Component;
 import java.util.Map;
+import org.springframework.stereotype.Component;
 
 @Component
 public class ProviderFactory {
@@ -14,7 +14,7 @@ public class ProviderFactory {
     }
 
     public Provider getProvider(String name) {
-        Provider provider = providers.get(name);
+        final Provider provider = providers.get(name);
         if (provider == null) {
             throw new InvalidProviderException("Invalid provider name was provided");
         }

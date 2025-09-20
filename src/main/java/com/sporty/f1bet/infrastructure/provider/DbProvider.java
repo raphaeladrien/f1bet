@@ -3,9 +3,8 @@ package com.sporty.f1bet.infrastructure.provider;
 import com.sporty.f1bet.application.provider.Provider;
 import com.sporty.f1bet.infrastructure.persistence.entity.Driver;
 import com.sporty.f1bet.infrastructure.persistence.entity.Session;
-import org.springframework.stereotype.Component;
-
 import java.util.List;
+import org.springframework.stereotype.Component;
 
 @Component
 public class DbProvider implements Provider {
