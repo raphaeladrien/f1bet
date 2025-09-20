@@ -1,1 +1,8 @@
 rootProject.name = 'f1bet'
+
+buildCache {
+	local {
+		enabled = true
+		directory = new File(rootDir, 'build-cache')
+	}
+}

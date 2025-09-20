@@ -2,6 +2,11 @@ buildscript {
 	repositories {
 		mavenCentral()
 	}
+
+	ext {
+		springRetry = "2.0.3"
+		springAspects = "6.2.11"
+	}
 }
 
 plugins {
@@ -12,7 +17,6 @@ plugins {
 }
 
 group = 'com.sporty'
-version = '0.0.1-SNAPSHOT'
 description = 'Challenge to Sporty group position'
 
 java {
@@ -26,13 +30,15 @@ repositories {
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.springframework.retry:spring-retry:2.0.3'
-	implementation 'org.springframework:spring-aspects:6.2.11'
+	implementation("org.springframework.boot:spring-boot-starter-web")
+	implementation("org.springframework.retry:spring-retry:${springRetry}")
+	implementation("org.springframework:spring-aspects:${springAspects}")
 
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation 'org.junit.jupiter:junit-jupiter-params'
-	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+	testImplementation("org.springframework.boot:spring-boot-starter-test") {
+		exclude group: 'junit'
+	}
+	testImplementation("org.junit.jupiter:junit-jupiter-params")
+	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
 tasks.named('test') {

@@ -1,0 +1,25 @@
+services:
+  tests:
+    build:
+      context: .
+      target: build
+    container_name: f1bet-tests
+    volumes:
+      - .:/app
+    entrypoint: [ "./gradlew", "test" ]
+    networks:
+      - spotynetwork
+
+  f1bet:
+    build:
+      context: .
+      target: f1bet
+    container_name: f1bet
+    ports:
+      - "8080:8080"
+    networks:
+      - spotynetwork
+
+networks:
+  spotynetwork:
+    driver: bridge
