@@ -2,15 +2,17 @@ package com.sporty.f1bet.infrastructure.provider;
 
 import static org.springframework.http.HttpMethod.GET;
 
+import com.sporty.f1bet.application.entity.Driver;
+import com.sporty.f1bet.application.entity.Session;
 import com.sporty.f1bet.application.provider.Provider;
 import com.sporty.f1bet.infrastructure.mapper.DriverMapper;
 import com.sporty.f1bet.infrastructure.mapper.SessionMapper;
-import com.sporty.f1bet.infrastructure.persistence.entity.Driver;
-import com.sporty.f1bet.infrastructure.persistence.entity.Session;
 import com.sporty.f1bet.infrastructure.provider.dto.DriverDTO;
 import com.sporty.f1bet.infrastructure.provider.dto.SessionDTO;
+import java.security.InvalidParameterException;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.ResponseEntity;
@@ -39,13 +41,26 @@ public class OpenF1Provider implements Provider {
     @Retryable(
             retryFor = {RestClientException.class},
             maxAttempts = 4,
-            backoff = @Backoff(delay = 1000, multiplier = 2.0))
-    public List<Session> getSessions() {
-        final ResponseEntity<List<SessionDTO>> response = restTemplate.exchange(
-                UriComponentsBuilder.fromUriString(url + SESSION_RESOURCE).toUriString(),
-                GET,
-                null,
-                new ParameterizedTypeReference<>() {});
+            backoff =
+                    @Backoff(
+                            delayExpression = "${retry.backoff.delay}",
+                            multiplierExpression = "${retry.backoff.multiplier}"))
+    public List<Session> getSessions(final String sessionType, final Integer year, final String country) {
+        if (year <= 0) {
+            throw new InvalidParameterException("Year could not be <= 0");
+        }
+
+        final String uri = UriComponentsBuilder.fromUriString(url + SESSION_RESOURCE)
+                .queryParamIfPresent("session_type", Optional.ofNullable(sessionType))
+                .queryParamIfPresent("year", Optional.ofNullable(year))
+                .queryParamIfPresent("country_code", Optional.ofNullable(country))
+                .build()
+                .encode()
+                .toUri()
+                .toString();
+
+        final ResponseEntity<List<SessionDTO>> response =
+                restTemplate.exchange(uri, GET, null, new ParameterizedTypeReference<>() {});
 
         if (response.getBody() == null) return Collections.emptyList();
 
@@ -56,7 +71,10 @@ public class OpenF1Provider implements Provider {
     @Retryable(
             retryFor = {RestClientException.class},
             maxAttempts = 4,
-            backoff = @Backoff(delay = 1000, multiplier = 2.0))
+            backoff =
+                    @Backoff(
+                            delayExpression = "${retry.backoff.delay}",
+                            multiplierExpression = "${retry.backoff.multiplier}"))
     public List<Driver> getDrivers(Integer sessionKey) {
         final String uri = UriComponentsBuilder.fromUriString(url + DRIVER_RESOURCE)
                 .queryParam("session_key", sessionKey)

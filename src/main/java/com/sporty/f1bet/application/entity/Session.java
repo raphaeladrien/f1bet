@@ -1,9 +1,10 @@
-package com.sporty.f1bet.infrastructure.persistence.entity;
+package com.sporty.f1bet.application.entity;
 
 import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "sessions")
@@ -150,5 +151,24 @@ public class Session {
 
     public Boolean addDriver(Driver driver) {
         return getDrivers().add(driver);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Session session = (Session) o;
+        return Objects.equals(id, session.id)
+                && Objects.equals(sessionKey, session.sessionKey)
+                && Objects.equals(name, session.name)
+                && Objects.equals(year, session.year)
+                && Objects.equals(country, session.country)
+                && Objects.equals(countryName, session.countryName)
+                && Objects.equals(sessionName, session.sessionName)
+                && sessionType == session.sessionType;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, sessionKey, name, year, country, countryName, sessionName, sessionType);
     }
 }

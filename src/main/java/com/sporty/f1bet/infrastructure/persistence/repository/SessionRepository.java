@@ -1,6 +1,6 @@
 package com.sporty.f1bet.infrastructure.persistence.repository;
 
-import com.sporty.f1bet.infrastructure.persistence.entity.Session;
+import com.sporty.f1bet.application.entity.Session;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;

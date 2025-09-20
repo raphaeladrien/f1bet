@@ -1,9 +1,8 @@
 package com.sporty.f1bet.infrastructure.persistence.repository;
 
-import com.sporty.f1bet.infrastructure.persistence.entity.Driver;
-import com.sporty.f1bet.infrastructure.persistence.entity.Session;
-import jakarta.transaction.Transactional;
-import java.util.Collections;
+import com.sporty.f1bet.application.entity.Driver;
+import com.sporty.f1bet.application.entity.Session;
+import com.sporty.f1bet.infrastructure.BuilderHelper;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
@@ -14,10 +13,9 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
-@SpringBootTest
-@Transactional
+@DataJpaTest
 public class SessionRespositoryTest {
 
     @Autowired
@@ -25,24 +23,16 @@ public class SessionRespositoryTest {
 
     @BeforeEach
     void setup() {
-        final Session session = new Session(
-                7,
-                "Spa-Francorchamps",
-                2023,
-                "BEL",
-                "Belgium",
-                "Belgium GP",
-                Session.SessionType.PRACTICE,
-                Collections.emptyList());
+        final Session session = BuilderHelper.buildSession();
+        final Driver driver = BuilderHelper.buildDriver();
 
-        final Driver driver = new Driver("Ayrton Senna", 12, session);
         session.addDriver(driver);
         sessionRepository.save(session);
     }
 
     @ParameterizedTest
     @MethodSource("sessionParams")
-    @DisplayName("returns matching sessions when one or more filter parameters are supplied\n")
+    @DisplayName("returns matching sessions when one or more filter parameters are supplied")
     void returnSessionForParameterProvided(String type, Integer year, String country) {
         final Session.SessionType sessionType = Session.SessionType.fromString(type);
         final Optional<List<Session>> optionalResult =

@@ -1,6 +1,6 @@
 package com.sporty.f1bet.infrastructure.mapper;
 
-import com.sporty.f1bet.infrastructure.persistence.entity.Session;
+import com.sporty.f1bet.application.entity.Session;
 import com.sporty.f1bet.infrastructure.provider.dto.SessionDTO;
 import java.util.Collections;
 

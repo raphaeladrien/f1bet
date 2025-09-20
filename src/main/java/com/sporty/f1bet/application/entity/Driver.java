@@ -1,6 +1,7 @@
-package com.sporty.f1bet.infrastructure.persistence.entity;
+package com.sporty.f1bet.application.entity;
 
 import jakarta.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "drivers")
@@ -59,5 +60,19 @@ public class Driver {
 
     public void setSession(Session session) {
         this.session = session;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Driver driver = (Driver) o;
+        return Objects.equals(id, driver.id)
+                && Objects.equals(fullName, driver.fullName)
+                && Objects.equals(driverNumber, driver.driverNumber);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, fullName, driverNumber);
     }
 }
