@@ -24,9 +24,9 @@ public class SessionRespositoryTest {
     @BeforeEach
     void setup() {
         final Session session = BuilderHelper.buildSession();
-        final Driver driver = BuilderHelper.buildDriver();
+        final Driver driver = BuilderHelper.buildDriver(session);
 
-        session.addDriver(driver);
+        session.setDrivers(List.of(driver));
         sessionRepository.save(session);
     }
 

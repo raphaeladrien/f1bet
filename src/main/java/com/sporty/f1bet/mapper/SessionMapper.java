@@ -15,6 +15,7 @@ public class SessionMapper {
                 dto.countryName(),
                 dto.sessionName(),
                 Session.SessionType.fromString(dto.sessionType()),
+                dto.circuitShortName(),
                 Collections.emptyList());
     }
 }

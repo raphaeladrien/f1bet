@@ -15,10 +15,11 @@ public abstract class BuilderHelper {
                 "Belgium",
                 "Belgium GP",
                 Session.SessionType.PRACTICE,
+                "Spa-Francorchamps",
                 Collections.emptyList());
     }
 
-    public static Driver buildDriver() {
-        return new Driver("Lewis Hamilton", 44, buildSession());
+    public static Driver buildDriver(final Session session) {
+        return new Driver("Lewis Hamilton", 44, (session == null) ? buildSession() : session);
     }
 }

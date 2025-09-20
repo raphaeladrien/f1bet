@@ -32,6 +32,9 @@ public class Session {
     @Column(name = "session_name")
     private String sessionName;
 
+    @Column
+    private String circuit;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "session_type", nullable = false)
     private SessionType sessionType;
@@ -49,6 +52,7 @@ public class Session {
             String countryName,
             String sessionName,
             SessionType sessionType,
+            String circuit,
             List<Driver> drivers) {
         this.id = null;
         this.sessionKey = sessionKey;
@@ -58,14 +62,25 @@ public class Session {
         this.countryName = countryName;
         this.sessionName = sessionName;
         this.sessionType = sessionType;
+        this.circuit = circuit;
         this.drivers = drivers != null ? new ArrayList<>(drivers) : new ArrayList<>();
     }
 
     public enum SessionType {
-        PRACTICE,
-        QUALIFYING,
-        RACE,
-        SPRINT;
+        PRACTICE("Practice"),
+        QUALIFYING("Qualifying"),
+        RACE("Race"),
+        SPRINT("Sprint");
+
+        private final String label;
+
+        SessionType(String label) {
+            this.label = label;
+        }
+
+        public String getLabel() {
+            return label;
+        }
 
         public static SessionType fromString(String value) {
             if (value == null) return null;
@@ -149,8 +164,12 @@ public class Session {
         this.drivers = drivers != null ? new ArrayList<>(drivers) : new ArrayList<>();
     }
 
-    public Boolean addDriver(Driver driver) {
-        return getDrivers().add(driver);
+    public String getCircuit() {
+        return circuit;
+    }
+
+    public void setCircuit(String circuit) {
+        this.circuit = circuit;
     }
 
     @Override

@@ -5,6 +5,7 @@ CREATE TABLE if not exists sessions (
     session_year INT,
     country VARCHAR(3),
     country_name VARCHAR(255) NOT NULL,
+    circuit VARCHAR(255) NOT NULL,
     session_name VARCHAR(40),
     session_type VARCHAR(40) NOT NULL
 );

@@ -58,7 +58,7 @@ class ProviderOrchestratorTest {
         fallbackSession.setSessionKey(1234);
 
         final List<Session> fallbackSessions = List.of(fallbackSession);
-        final List<Driver> drivers = List.of(BuilderHelper.buildDriver());
+        final List<Driver> drivers = List.of(BuilderHelper.buildDriver(null));
 
         when(primaryProvider.getSessions("qualifying", 2023, "UK")).thenReturn(Collections.emptyList());
         when(fallbackProvider.getSessions("qualifying", 2023, "UK")).thenReturn(fallbackSessions);

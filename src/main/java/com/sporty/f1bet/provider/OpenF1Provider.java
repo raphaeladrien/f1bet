@@ -45,7 +45,7 @@ public class OpenF1Provider implements Provider {
                             delayExpression = "${retry.backoff.delay}",
                             multiplierExpression = "${retry.backoff.multiplier}"))
     public List<Session> getSessions(final String sessionType, final Integer year, final String country) {
-        if (year <= 0) {
+        if (year != null && year <= 0) {
             throw new InvalidParameterException("Year could not be <= 0");
         }
 

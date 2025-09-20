@@ -26,7 +26,7 @@ public class DbProviderTest {
     private final String sessionType = "PRACTICE";
     private final String country = "BEL";
     private final Session session = BuilderHelper.buildSession();
-    private final Driver driver = BuilderHelper.buildDriver();
+    private final Driver driver = BuilderHelper.buildDriver(null);
 
     @Test
     @DisplayName("returns matching sessions when key parameters are supplied")

@@ -7,6 +7,7 @@ buildscript {
 		springRetry = "2.0.3"
 		springAspects = "6.2.11"
 		flywayCore = "9.17.0"
+		caffeine = "3.1.8"
 	}
 }
 
@@ -38,6 +39,7 @@ dependencies {
 	implementation("org.springframework.retry:spring-retry:${springRetry}")
 	implementation("org.springframework:spring-aspects:${springAspects}")
 
+	implementation("com.github.ben-manes.caffeine:caffeine:${caffeine}")
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.flywaydb:flyway-core:${flywayCore}")
 	runtimeOnly("com.h2database:h2")

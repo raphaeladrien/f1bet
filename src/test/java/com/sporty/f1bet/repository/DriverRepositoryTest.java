@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import com.sporty.f1bet.entity.Driver;
 import com.sporty.f1bet.entity.Session;
+import com.sporty.f1bet.helper.BuilderHelper;
 import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;
@@ -23,7 +24,7 @@ public class DriverRepositoryTest {
     @Test
     @DisplayName("returns matching drivers when session key parameter is supplied")
     void shouldReturnMatchingDriverWhenSessionKeyParam() {
-        Session session = new Session(1234, "a-name", 2023, "BEL", "Belgium", "Spa", Session.SessionType.RACE, null);
+        Session session = BuilderHelper.buildSession();
         session = sessionRepository.save(session);
 
         Driver driver1 = new Driver("Lewis Hamilton", 44, session);

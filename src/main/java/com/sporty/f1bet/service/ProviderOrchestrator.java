@@ -38,13 +38,12 @@ public class ProviderOrchestrator {
         Provider fallbackProvider = factory.getProvider(providerProperties.getFallback());
         List<Session> fallbackSessions = fallbackProvider.getSessions(sessionType, validatedYear, country);
 
-        for (Session session : fallbackSessions) {
+        fallbackSessions.forEach(session -> {
             List<Driver> drivers = fallbackProvider.getDrivers(session.getSessionKey());
-            for (Driver driver : drivers) {
-                driver.setSession(session);
-            }
+
+            drivers.forEach(driver -> driver.setSession(session));
             session.setDrivers(drivers);
-        }
+        });
 
         return sessionRepository.saveAll(fallbackSessions);
     }
