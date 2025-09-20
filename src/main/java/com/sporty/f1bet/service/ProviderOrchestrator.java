@@ -26,17 +26,23 @@ public class ProviderOrchestrator {
     }
 
     public List<Session> getSessions(final String sessionType, final Integer year, final String country) {
-        final Provider provider = factory.getProvider(providerProperties.getPrimary());
-        final Integer validatedYear = year <= 0 ? null : year;
-        final List<Session> sessions = provider.getSessions(sessionType, validatedYear, country);
+        final Integer validatedYear = (year != null && year > 0) ? year : null;
 
-        if (!sessions.isEmpty()) return sessions;
+        Provider primaryProvider = factory.getProvider(providerProperties.getPrimary());
+        List<Session> primarySessions = primaryProvider.getSessions(sessionType, validatedYear, country);
 
-        final Provider fallbackProvider = factory.getProvider(providerProperties.getFallback());
-        final List<Session> fallbackSessions = fallbackProvider.getSessions(sessionType, validatedYear, country);
+        if (!primarySessions.isEmpty()) {
+            return primarySessions;
+        }
+
+        Provider fallbackProvider = factory.getProvider(providerProperties.getFallback());
+        List<Session> fallbackSessions = fallbackProvider.getSessions(sessionType, validatedYear, country);
 
         for (Session session : fallbackSessions) {
-            final List<Driver> drivers = fallbackProvider.getDrivers(session.getSessionKey());
+            List<Driver> drivers = fallbackProvider.getDrivers(session.getSessionKey());
+            for (Driver driver : drivers) {
+                driver.setSession(session);
+            }
             session.setDrivers(drivers);
         }
 

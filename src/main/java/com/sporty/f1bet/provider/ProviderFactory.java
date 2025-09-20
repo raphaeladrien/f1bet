@@ -15,7 +15,7 @@ public class ProviderFactory {
     public Provider getProvider(String name) {
         final Provider provider = providers.get(name);
         if (provider == null) {
-            throw new InvalidProviderException("Invalid provider name was provided");
+            throw new InvalidProviderException("Invalid provider name was provided: " + name);
         }
         return provider;
     }
