@@ -8,7 +8,6 @@ import com.sporty.f1bet.entity.Driver;
 import com.sporty.f1bet.entity.Session;
 import com.sporty.f1bet.mapper.DriverMapper;
 import com.sporty.f1bet.mapper.SessionMapper;
-import com.sporty.f1bet.provider.OpenF1Provider;
 import com.sporty.f1bet.provider.dto.DriverDTO;
 import com.sporty.f1bet.provider.dto.SessionDTO;
 import java.time.OffsetDateTime;

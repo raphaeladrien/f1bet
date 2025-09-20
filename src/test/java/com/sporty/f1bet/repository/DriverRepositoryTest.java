@@ -6,9 +6,6 @@ import com.sporty.f1bet.entity.Driver;
 import com.sporty.f1bet.entity.Session;
 import java.util.List;
 import java.util.Optional;
-
-import com.sporty.f1bet.repository.DriverRepository;
-import com.sporty.f1bet.repository.SessionRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,6 +1,5 @@
 package com.sporty.f1bet.provider;
 
-import com.sporty.f1bet.provider.Provider;
 import java.util.Map;
 import org.springframework.stereotype.Component;
 

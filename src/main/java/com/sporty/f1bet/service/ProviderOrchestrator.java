@@ -1,11 +1,11 @@
 package com.sporty.f1bet.service;
 
+import com.sporty.f1bet.config.ProviderProperties;
 import com.sporty.f1bet.entity.Driver;
 import com.sporty.f1bet.entity.Session;
 import com.sporty.f1bet.provider.Provider;
-import com.sporty.f1bet.config.ProviderProperties;
-import com.sporty.f1bet.repository.SessionRepository;
 import com.sporty.f1bet.provider.ProviderFactory;
+import com.sporty.f1bet.repository.SessionRepository;
 import java.util.List;
 import org.springframework.stereotype.Service;
 
