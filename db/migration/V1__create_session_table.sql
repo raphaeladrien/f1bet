@@ -9,9 +9,9 @@ CREATE TABLE if not exists sessions (
     session_type VARCHAR(40) NOT NULL
 );
 
-CREATE INDEX idx_sessions_type_year_country ON sessions(session_type, session_key, country);
+CREATE INDEX idx_sessions_type_year_country ON sessions(session_type, session_year, country);
 CREATE INDEX idx_sessions_type ON sessions(session_type);
-CREATE INDEX idx_sessions_key ON sessions(session_key);
+CREATE INDEX idx_sessions_key ON sessions(session_year);
 CREATE INDEX idx_sessions_country ON sessions(country);
 
 

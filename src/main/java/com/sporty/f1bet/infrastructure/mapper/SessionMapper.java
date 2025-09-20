@@ -8,7 +8,6 @@ public class SessionMapper {
 
     public static Session toEntity(SessionDTO dto) {
         return new Session(
-                null,
                 dto.sessionKey(),
                 dto.sessionName(),
                 dto.year(),
