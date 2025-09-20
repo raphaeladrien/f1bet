@@ -11,6 +11,7 @@ COPY gradle gradle
 COPY ["gradlew", "build.gradle", "settings.gradle", "$APP_HOME/"]
 
 COPY src src
+COPY db db
 
 RUN chmod +x gradlew
 
@@ -22,6 +23,7 @@ FROM mcr.microsoft.com/openjdk/jdk:21-distroless AS f1bet
 LABEL maintainer="Sporty Group"
 
 COPY --from=build /app/build/libs/f1bet.jar .
+COPY --from=build /app/db ./db
 
 CMD ["-jar", "f1bet.jar"]
 
