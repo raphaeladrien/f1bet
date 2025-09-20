@@ -5,6 +5,6 @@ import com.sporty.f1bet.infrastructure.provider.dto.DriverDTO;
 
 public class DriverMapper {
     public static Driver toEntity(DriverDTO dto) {
-        return new Driver(null, dto.fullName(), dto.driverNumber());
+        return new Driver(null, dto.fullName(), dto.driverNumber(), null);
     }
 }

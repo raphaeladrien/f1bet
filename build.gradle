@@ -6,6 +6,7 @@ buildscript {
 	ext {
 		springRetry = "2.0.3"
 		springAspects = "6.2.11"
+		flywayCore = "9.17.0"
 	}
 }
 
@@ -14,7 +15,10 @@ plugins {
 	id 'org.springframework.boot' version '3.5.6'
 	id 'io.spring.dependency-management' version '1.1.7'
 	id 'com.diffplug.spotless' version '7.2.1'
+	id "org.flywaydb.flyway" version "9.8.1"
 }
+
+apply plugin: "org.flywaydb.flyway"
 
 group = 'com.sporty'
 description = 'Challenge to Sporty group position'
@@ -35,6 +39,7 @@ dependencies {
 	implementation("org.springframework:spring-aspects:${springAspects}")
 
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+	implementation("org.flywaydb:flyway-core:${flywayCore}")
 	runtimeOnly("com.h2database:h2")
 
 	testImplementation("org.springframework.boot:spring-boot-starter-test") {
