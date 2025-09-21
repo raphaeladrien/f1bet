@@ -40,11 +40,11 @@ class ProcessOutcomeServiceTest {
     @DisplayName("should return 0 when event found but no pending bets")
     void shouldReturnZeroWhenNoPendingBets() {
         final EventOutcome event = new EventOutcome();
-        event.setSessionKey(12345L);
+        event.setSessionKey(12345);
 
         when(eventOutcomeRepository.findByStatus(EventOutcome.EventStatus.PENDING))
                 .thenReturn(Optional.of(event));
-        when(betRepository.findBySessionKeyAndStatus(12345L, Bet.BetStatus.PENDING))
+        when(betRepository.findBySessionKeyAndStatus(12345, Bet.BetStatus.PENDING))
                 .thenReturn(Optional.empty());
 
         final int result = processEventOutcome.processOutcome();
@@ -57,7 +57,7 @@ class ProcessOutcomeServiceTest {
     @DisplayName("should mark bets as LOST when no winners exist")
     void shouldMarkBetsAsLostWhenNoWinners() {
         final EventOutcome event = new EventOutcome();
-        event.setSessionKey(12345L);
+        event.setSessionKey(12345);
         event.setWinningDriverNumber(44);
 
         final Bet bet = new Bet();
@@ -67,7 +67,7 @@ class ProcessOutcomeServiceTest {
 
         when(eventOutcomeRepository.findByStatus(EventOutcome.EventStatus.PENDING))
                 .thenReturn(Optional.of(event));
-        when(betRepository.findBySessionKeyAndStatus(12345L, Bet.BetStatus.PENDING))
+        when(betRepository.findBySessionKeyAndStatus(12345, Bet.BetStatus.PENDING))
                 .thenReturn(Optional.of(List.of(bet)));
 
         final int result = processEventOutcome.processOutcome();
@@ -84,7 +84,7 @@ class ProcessOutcomeServiceTest {
     void shouldMarkBetsAsWonAndUpdateUserBalance() {
 
         final EventOutcome event = new EventOutcome();
-        event.setSessionKey(12345L);
+        event.setSessionKey(12345);
         event.setWinningDriverNumber(44);
 
         final User user = new User();
@@ -99,7 +99,7 @@ class ProcessOutcomeServiceTest {
 
         when(eventOutcomeRepository.findByStatus(EventOutcome.EventStatus.PENDING))
                 .thenReturn(Optional.of(event));
-        when(betRepository.findBySessionKeyAndStatus(12345L, Bet.BetStatus.PENDING))
+        when(betRepository.findBySessionKeyAndStatus(12345, Bet.BetStatus.PENDING))
                 .thenReturn(Optional.of(List.of(bet)));
 
         final int result = processEventOutcome.processOutcome();
@@ -119,7 +119,7 @@ class ProcessOutcomeServiceTest {
     @DisplayName("should handle multiple bets and update user balance only once per user")
     void shouldHandleMultipleBetsAndOnlyUpdateWinningUsersOnce() {
         final EventOutcome event = new EventOutcome();
-        event.setSessionKey(12345L);
+        event.setSessionKey(12345);
         event.setWinningDriverNumber(44);
 
         final User user = new User();
@@ -148,7 +148,7 @@ class ProcessOutcomeServiceTest {
 
         when(eventOutcomeRepository.findByStatus(EventOutcome.EventStatus.PENDING))
                 .thenReturn(Optional.of(event));
-        when(betRepository.findBySessionKeyAndStatus(12345L, Bet.BetStatus.PENDING))
+        when(betRepository.findBySessionKeyAndStatus(12345, Bet.BetStatus.PENDING))
                 .thenReturn(Optional.of(List.of(winningBet1, winningBet2, losingBet)));
 
         final int result = processEventOutcome.processOutcome();

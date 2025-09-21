@@ -2,7 +2,7 @@ package com.sporty.f1bet.controller;
 
 import com.sporty.f1bet.controller.dto.OddRequest;
 import com.sporty.f1bet.dto.BetOptionsResponse;
-import com.sporty.f1bet.dto.ProcessBetResponse;
+import com.sporty.f1bet.dto.GenericResponse;
 import com.sporty.f1bet.interactors.ProcessBet;
 import com.sporty.f1bet.interactors.RetrieveBetOptions;
 import java.util.UUID;
@@ -32,7 +32,7 @@ public class F1RaceOddsController {
     }
 
     @PostMapping("/odds")
-    public ResponseEntity<ProcessBetResponse> odds(
+    public ResponseEntity<GenericResponse> odds(
             @RequestBody final OddRequest request,
             @RequestHeader(value = "Idempotency-Key") final String idempotencyKey) {
         return ResponseEntity.ok(processBet.execute(

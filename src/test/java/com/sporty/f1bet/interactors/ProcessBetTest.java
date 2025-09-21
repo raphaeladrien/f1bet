@@ -5,7 +5,7 @@ import static org.mockito.Mockito.*;
 
 import com.github.benmanes.caffeine.cache.Cache;
 import com.sporty.f1bet.dto.DriverResponse;
-import com.sporty.f1bet.dto.ProcessBetResponse;
+import com.sporty.f1bet.dto.GenericResponse;
 import com.sporty.f1bet.dto.SessionResponse;
 import com.sporty.f1bet.entity.Bet;
 import com.sporty.f1bet.entity.IdempotencyKey;
@@ -37,10 +37,9 @@ class ProcessBetTest {
         when(idempotencyKeyRepository.findById(idempotencyKey))
                 .thenReturn(Optional.of(new IdempotencyKey(idempotencyKey, 1L, betId)));
 
-        final ProcessBetResponse response =
-                processBet.execute(1L, BigDecimal.TEN, idempotencyKey, UUID.randomUUID(), 7);
+        final GenericResponse response = processBet.execute(1L, BigDecimal.TEN, idempotencyKey, UUID.randomUUID(), 7);
 
-        assertEquals(betId, response.betId());
+        assertEquals(betId, response.requestId());
         verifyNoInteractions(userRepository, betRepository, eventCache);
     }
 
@@ -123,9 +122,9 @@ class ProcessBetTest {
 
         when(betRepository.save(any(Bet.class))).thenReturn(savedBet);
 
-        final ProcessBetResponse response = processBet.execute(1L, BigDecimal.TEN, idempotencyKey, eventId, 7);
+        final GenericResponse response = processBet.execute(1L, BigDecimal.TEN, idempotencyKey, eventId, 7);
 
-        assertEquals(betId, response.betId());
+        assertEquals(betId, response.requestId());
         assertEquals(BigDecimal.valueOf(90), user.getBalance()); // balance reduced
 
         verify(userRepository).save(user);

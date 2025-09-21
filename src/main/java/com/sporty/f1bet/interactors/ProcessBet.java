@@ -2,7 +2,7 @@ package com.sporty.f1bet.interactors;
 
 import com.github.benmanes.caffeine.cache.Cache;
 import com.sporty.f1bet.dto.DriverResponse;
-import com.sporty.f1bet.dto.ProcessBetResponse;
+import com.sporty.f1bet.dto.GenericResponse;
 import com.sporty.f1bet.dto.SessionResponse;
 import com.sporty.f1bet.entity.Bet;
 import com.sporty.f1bet.entity.IdempotencyKey;
@@ -44,12 +44,12 @@ public class ProcessBet {
             maxAttempts = 5,
             backoff = @Backoff(delay = 50, multiplier = 2))
     @Transactional
-    public ProcessBetResponse execute(
+    public GenericResponse execute(
             Long userId, BigDecimal amount, UUID idempotencyKey, UUID eventId, Integer driverNumber) {
 
         final Optional<IdempotencyKey> optionalIdempotencyKey = idempotencyKeyRepository.findById(idempotencyKey);
         if (optionalIdempotencyKey.isPresent()) {
-            return buildProcessBetResponse(optionalIdempotencyKey.get().getBetId());
+            return buildGenericResponse(optionalIdempotencyKey.get().getResultId());
         }
 
         final SessionResponse sessionResponse = eventCache.getIfPresent(eventId.toString());
@@ -82,11 +82,11 @@ public class ProcessBet {
                 driverResponse.getOdd()));
 
         idempotencyKeyRepository.save(new IdempotencyKey(idempotencyKey, userId, bet.getId()));
-        return buildProcessBetResponse(bet.getId());
+        return buildGenericResponse(bet.getId());
     }
 
-    private ProcessBetResponse buildProcessBetResponse(final UUID betId) {
-        return new ProcessBetResponse(betId);
+    private GenericResponse buildGenericResponse(final UUID betId) {
+        return new GenericResponse(betId);
     }
 
     public static class UserNotFoundException extends RuntimeException {
