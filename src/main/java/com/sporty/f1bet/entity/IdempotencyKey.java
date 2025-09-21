@@ -17,11 +17,11 @@ public class IdempotencyKey extends Auditable {
     private Long userId;
 
     @Column(name = "bet_id", nullable = false)
-    private Long betId;
+    private UUID betId;
 
     public IdempotencyKey() {}
 
-    public IdempotencyKey(UUID id, Long userId, Long betId) {
+    public IdempotencyKey(UUID id, Long userId, UUID betId) {
         this.id = id;
         this.userId = userId;
         this.betId = betId;
@@ -43,11 +43,11 @@ public class IdempotencyKey extends Auditable {
         this.userId = userId;
     }
 
-    public Long getBetId() {
+    public UUID getBetId() {
         return betId;
     }
 
-    public void setBetId(Long betId) {
+    public void setBetId(UUID betId) {
         this.betId = betId;
     }
 }

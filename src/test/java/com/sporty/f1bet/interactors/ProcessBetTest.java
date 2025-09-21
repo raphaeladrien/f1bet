@@ -33,7 +33,7 @@ class ProcessBetTest {
     @DisplayName("should return existing bet response when idempotency key already exists")
     void shouldReturnExistingBetWhenIdempotencyKeyExists() {
         final UUID idempotencyKey = UUID.randomUUID();
-        final Long betId = 42L;
+        final UUID betId = UUID.randomUUID();
         when(idempotencyKeyRepository.findById(idempotencyKey))
                 .thenReturn(Optional.of(new IdempotencyKey(idempotencyKey, 1L, betId)));
 
@@ -107,7 +107,7 @@ class ProcessBetTest {
     void shouldProcessBetSuccessfully() {
         final UUID eventId = UUID.randomUUID();
         final UUID idempotencyKey = UUID.randomUUID();
-        final Long betId = 99L;
+        final UUID betId = UUID.randomUUID();
 
         when(idempotencyKeyRepository.findById(idempotencyKey)).thenReturn(Optional.empty());
         final SessionResponse sessionResponse = buildSessionResponse(7);

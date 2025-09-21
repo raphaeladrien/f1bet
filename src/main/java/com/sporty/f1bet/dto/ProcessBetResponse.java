@@ -1,3 +1,5 @@
 package com.sporty.f1bet.dto;
 
-public record ProcessBetResponse(Long betId) {}
+import java.util.UUID;
+
+public record ProcessBetResponse(UUID betId) {}

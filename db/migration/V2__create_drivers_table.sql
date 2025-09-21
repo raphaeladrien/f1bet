@@ -1,4 +1,4 @@
-CREATE TABLE drivers (
+CREATE TABLE if not exists drivers (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     full_name VARCHAR(255),
     driver_number INT,

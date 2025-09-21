@@ -2,6 +2,7 @@ package com.sporty.f1bet.helper;
 
 import com.sporty.f1bet.entity.Driver;
 import com.sporty.f1bet.entity.Session;
+import java.security.SecureRandom;
 import java.util.Collections;
 
 public abstract class BuilderHelper {
@@ -20,7 +21,7 @@ public abstract class BuilderHelper {
     }
 
     public static Session buildSession() {
-        return buildSessionWithKey(null);
+        return buildSessionWithKey(new SecureRandom().nextInt(100) + 2);
     }
 
     public static Driver buildDriverWithName(final Session session, String name) {

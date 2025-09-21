@@ -85,7 +85,7 @@ public class ProcessBet {
         return buildProcessBetResponse(bet.getId());
     }
 
-    private ProcessBetResponse buildProcessBetResponse(final Long betId) {
+    private ProcessBetResponse buildProcessBetResponse(final UUID betId) {
         return new ProcessBetResponse(betId);
     }
 

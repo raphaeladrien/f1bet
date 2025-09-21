@@ -2,14 +2,15 @@ package com.sporty.f1bet.entity;
 
 import jakarta.persistence.*;
 import java.math.BigDecimal;
+import java.util.UUID;
 
 @Entity
 @Table(name = "bets")
 public class Bet extends Auditable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue
+    private UUID id;
 
     @Column(nullable = false)
     private BigDecimal balance;
@@ -48,11 +49,11 @@ public class Bet extends Auditable {
         LOST
     }
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
