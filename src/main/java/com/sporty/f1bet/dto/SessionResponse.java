@@ -11,19 +11,21 @@ public class SessionResponse {
     private final String name;
     private final String country;
     private final String circuit;
+    private final Integer year;
 
     @JsonIgnore
     private final Integer sessionKey;
 
     private final List<DriverResponse> drivers;
 
-    public SessionResponse(String type, String name, String country, String circuit, Integer sessionKey) {
+    public SessionResponse(String type, String name, String country, String circuit, Integer sessionKey, Integer year) {
         this.id = UUID.randomUUID();
         this.name = name;
         this.type = type;
         this.country = country;
         this.circuit = circuit;
         this.sessionKey = sessionKey;
+        this.year = year;
         this.drivers = new ArrayList<>(20);
     }
 
@@ -49,6 +51,10 @@ public class SessionResponse {
 
     public String getCircuit() {
         return circuit;
+    }
+
+    public Integer getYear() {
+        return year;
     }
 
     public Integer getSessionKey() {

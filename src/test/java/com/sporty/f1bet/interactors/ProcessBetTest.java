@@ -142,7 +142,7 @@ class ProcessBetTest {
 
     private SessionResponse buildSessionResponse(final Integer driverNumber) {
         final DriverResponse driver = new DriverResponse("a-name", driverNumber);
-        final SessionResponse session = new SessionResponse("a-type", "a-name", "BLA", "a-race-track", 1234);
+        final SessionResponse session = new SessionResponse("a-type", "a-name", "BLA", "a-race-track", 1234, 2025);
         session.addDriver(driver);
         return session;
     }
