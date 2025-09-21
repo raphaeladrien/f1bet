@@ -9,10 +9,14 @@ import com.sporty.f1bet.repository.IdempotencyKeyRepository;
 import com.sporty.f1bet.repository.UserRepository;
 import java.util.Optional;
 import java.util.UUID;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 @Service
 public class SaveEventOutcome {
+
+    private static final Logger logger = LoggerFactory.getLogger(SaveEventOutcome.class);
 
     private final IdempotencyKeyRepository idempotencyKeyRepository;
     private final UserRepository userRepository;
@@ -35,11 +39,16 @@ public class SaveEventOutcome {
 
         final Optional<IdempotencyKey> optionalIdempotencyKey = idempotencyKeyRepository.findById(idempotencyKey);
         if (optionalIdempotencyKey.isPresent()) {
+            logger.info(
+                    "Idempotent request detected for idempotencyKey={}, returning previous resultId={}",
+                    idempotencyKey,
+                    optionalIdempotencyKey.get().getResultId());
             return buildGenericResponse(optionalIdempotencyKey.get().getResultId());
         }
 
         final EventOutcome event = eventOutcomeRepository.save(new EventOutcome(sessionKey, winningNumber, user));
 
+        logger.info("Event outcome successfully informed: event={}", event.getId());
         return new GenericResponse(event.getId());
     }
 
