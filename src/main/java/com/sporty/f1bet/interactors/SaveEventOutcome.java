@@ -57,14 +57,14 @@ public class SaveEventOutcome {
     }
 
     public static class UserNotFoundException extends RuntimeException {
-        public UserNotFoundException(String mensagem) {
-            super(mensagem);
+        public UserNotFoundException(String message) {
+            super(message);
         }
     }
 
     public static class InvalidUserException extends RuntimeException {
-        public InvalidUserException(String mensagem) {
-            super(mensagem);
+        public InvalidUserException(String message) {
+            super(message);
         }
     }
 }
