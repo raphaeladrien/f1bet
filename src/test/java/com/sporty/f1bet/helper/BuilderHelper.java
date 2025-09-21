@@ -6,9 +6,9 @@ import java.util.Collections;
 
 public abstract class BuilderHelper {
 
-    public static Session buildSession() {
+    public static Session buildSessionWithKey(Integer sessionKey) {
         return new Session(
-                7,
+                sessionKey,
                 "Spa-Francorchamps",
                 2023,
                 "BEL",
@@ -19,7 +19,15 @@ public abstract class BuilderHelper {
                 Collections.emptyList());
     }
 
+    public static Session buildSession() {
+        return buildSessionWithKey(null);
+    }
+
+    public static Driver buildDriverWithName(final Session session, String name) {
+        return new Driver(name, 44, (session == null) ? buildSession() : session);
+    }
+
     public static Driver buildDriver(final Session session) {
-        return new Driver("Lewis Hamilton", 44, (session == null) ? buildSession() : session);
+        return buildDriverWithName(session, null);
     }
 }

@@ -14,4 +14,6 @@ public interface SessionRepository extends JpaRepository<Session, Long> {
             + "(:year IS NULL or s.year = :year) and "
             + "(:country IS NULL or s.country = :country)")
     Optional<List<Session>> findBySessionTypeAndYearAndCountry(Session.SessionType type, Integer year, String country);
+
+    boolean existsBySessionKey(Integer sessionKey);
 }

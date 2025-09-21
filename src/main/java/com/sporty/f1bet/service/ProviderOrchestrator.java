@@ -28,23 +28,31 @@ public class ProviderOrchestrator {
     public List<Session> getSessions(final String sessionType, final Integer year, final String country) {
         final Integer validatedYear = (year != null && year > 0) ? year : null;
 
-        Provider primaryProvider = factory.getProvider(providerProperties.getPrimary());
-        List<Session> primarySessions = primaryProvider.getSessions(sessionType, validatedYear, country);
+        final Provider primaryProvider = factory.getProvider(providerProperties.getPrimary());
+        final List<Session> primarySessions = primaryProvider.getSessions(sessionType, validatedYear, country);
 
-        if (!primarySessions.isEmpty()) {
+        if (!primarySessions.isEmpty() && allParamsProvided(sessionType, year, country)) {
             return primarySessions;
         }
 
-        Provider fallbackProvider = factory.getProvider(providerProperties.getFallback());
-        List<Session> fallbackSessions = fallbackProvider.getSessions(sessionType, validatedYear, country);
+        final Provider fallbackProvider = factory.getProvider(providerProperties.getFallback());
+        final List<Session> fallbackSessions = fallbackProvider.getSessions(sessionType, validatedYear, country);
+        final List<Session> newSessions = fallbackSessions.stream()
+                .filter(session -> !sessionRepository.existsBySessionKey(session.getSessionKey()))
+                .peek(session -> {
+                    List<Driver> drivers = fallbackProvider.getDrivers(session.getSessionKey()).stream()
+                            .peek(driver -> driver.setSession(session))
+                            .toList();
+                    session.setDrivers(drivers);
+                })
+                .toList();
 
-        fallbackSessions.forEach(session -> {
-            List<Driver> drivers = fallbackProvider.getDrivers(session.getSessionKey());
+        if (!newSessions.isEmpty()) sessionRepository.saveAll(newSessions);
 
-            drivers.forEach(driver -> driver.setSession(session));
-            session.setDrivers(drivers);
-        });
+        return primaryProvider.getSessions(sessionType, validatedYear, country);
+    }
 
-        return sessionRepository.saveAll(fallbackSessions);
+    private boolean allParamsProvided(final String sessionType, final Integer year, final String country) {
+        return sessionType != null && (year != null && year > 0) && country != null;
     }
 }
