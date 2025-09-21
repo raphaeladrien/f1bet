@@ -14,7 +14,7 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class RetrieveBetOptionsTest {
+public class RetrieveProcessBetOptionsTest {
 
     private final ProviderOrchestrator orchestrator = mock(ProviderOrchestrator.class);
     private final Cache<String, SessionResponse> eventCache = mock(Cache.class);

@@ -11,7 +11,6 @@ public class DriverResponse {
         this.name = name;
         this.number = number;
         this.odd = ThreadLocalRandom.current().nextInt(2, 5);
-        ;
     }
 
     public String getName() {

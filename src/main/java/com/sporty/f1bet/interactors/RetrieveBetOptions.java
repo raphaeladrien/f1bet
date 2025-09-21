@@ -30,7 +30,8 @@ public class RetrieveBetOptions {
                             session.getSessionType().getLabel(),
                             session.getSessionName(),
                             session.getCountryName(),
-                            session.getCircuit());
+                            session.getCircuit(),
+                            session.getSessionKey());
 
                     session.getDrivers().stream()
                             .map(driver -> new DriverResponse(driver.getFullName(), driver.getDriverNumber()))

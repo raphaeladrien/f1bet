@@ -1,5 +1,6 @@
 package com.sporty.f1bet.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -11,14 +12,18 @@ public class SessionResponse {
     private final String country;
     private final String circuit;
 
+    @JsonIgnore
+    private final Integer sessionKey;
+
     private final List<DriverResponse> drivers;
 
-    public SessionResponse(String type, String name, String country, String circuit) {
+    public SessionResponse(String type, String name, String country, String circuit, Integer sessionKey) {
         this.id = UUID.randomUUID();
         this.name = name;
         this.type = type;
         this.country = country;
         this.circuit = circuit;
+        this.sessionKey = sessionKey;
         this.drivers = new ArrayList<>(20);
     }
 
@@ -44,6 +49,10 @@ public class SessionResponse {
 
     public String getCircuit() {
         return circuit;
+    }
+
+    public Integer getSessionKey() {
+        return sessionKey;
     }
 
     public void addDriver(final DriverResponse driver) {
