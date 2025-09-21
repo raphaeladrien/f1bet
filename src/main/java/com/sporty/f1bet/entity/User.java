@@ -22,6 +22,13 @@ public class User extends Auditable {
     @Column(nullable = false)
     private UserRole role;
 
+    public User() {}
+
+    public User(BigDecimal balance, UserRole role) {
+        this.balance = balance;
+        this.role = role;
+    }
+
     public Long getId() {
         return id;
     }
