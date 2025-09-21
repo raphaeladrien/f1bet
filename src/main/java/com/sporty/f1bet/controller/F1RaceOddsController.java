@@ -26,7 +26,7 @@ public class F1RaceOddsController {
         this.processBet = processBet;
     }
 
-    @GetMapping("/odds")
+    @GetMapping("/events")
     @ApiResponses(
             value = {
                 @ApiResponse(

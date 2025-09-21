@@ -1,6 +1,5 @@
 package com.sporty.f1bet.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -12,8 +11,6 @@ public class SessionResponse {
     private final String country;
     private final String circuit;
     private final Integer year;
-
-    @JsonIgnore
     private final Integer sessionKey;
 
     private final List<DriverResponse> drivers;
