@@ -6,5 +6,7 @@ CREATE TABLE bets (
     session_key INT NOT NULL,
     driver_number INT NOT NULL,
     odd INT NOT NULL,
+    created_at TIMESTAMP NOT NULL,
+    updated_at TIMESTAMP NOT NULL,
     CONSTRAINT fk_bet_user FOREIGN KEY (user_id) REFERENCES users(id)
 );

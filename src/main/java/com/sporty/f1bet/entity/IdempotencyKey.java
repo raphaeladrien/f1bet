@@ -8,7 +8,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "idempotency_keys")
-public class IdempotencyKey {
+public class IdempotencyKey extends Auditable {
 
     @Id
     private UUID id;

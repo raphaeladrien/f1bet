@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 
 @Entity
 @Table(name = "bets")
-public class Bet {
+public class Bet extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
