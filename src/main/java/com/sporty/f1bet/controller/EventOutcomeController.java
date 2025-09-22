@@ -22,7 +22,7 @@ public class EventOutcomeController {
         this.eventOutcome = eventOutcome;
     }
 
-    @PostMapping("/event/result")
+    @PostMapping("/events/result")
     @ApiResponses(
             value = {
                 @ApiResponse(
