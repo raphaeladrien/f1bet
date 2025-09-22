@@ -13,7 +13,7 @@ public abstract class BuilderHelper {
                 "Spa-Francorchamps",
                 2023,
                 "BEL",
-                "Belgium",
+                "BEL",
                 "Belgium GP",
                 Session.SessionType.PRACTICE,
                 "Spa-Francorchamps",

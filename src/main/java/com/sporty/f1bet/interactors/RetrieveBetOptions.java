@@ -7,6 +7,10 @@ import com.sporty.f1bet.dto.SessionResponse;
 import com.sporty.f1bet.entity.Session;
 import com.sporty.f1bet.repository.SessionRepository;
 import com.sporty.f1bet.service.ProviderOrchestrator;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
+import java.util.stream.Collectors;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -14,6 +18,10 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class RetrieveBetOptions {
+
+    public static final List<String> ISO_ALPHA3_CODES = Arrays.stream(Locale.getISOCountries())
+            .map(code -> Locale.of("", code).getISO3Country())
+            .collect(Collectors.toList());
 
     private final ProviderOrchestrator orchestrator;
     private final Cache<String, SessionResponse> eventCache;
@@ -34,6 +42,11 @@ public class RetrieveBetOptions {
             final String country,
             final Integer page,
             final Integer size) {
+
+        if (country == null || ISO_ALPHA3_CODES.stream().noneMatch(code -> code.equalsIgnoreCase(country))) {
+            throw new InvalidCountryCodeException("Invalid or missing ISO 3166-1 alpha-3 country code: " + country);
+        }
+
         refreshSessions(sessionType, year, country);
         final Pageable pageable = PageRequest.of(page, size);
         final Page<Session> sessions = sessionRepository.findBySessionTypeAndYearAndCountry(
@@ -61,5 +74,11 @@ public class RetrieveBetOptions {
 
     private void refreshSessions(final String sessionType, final Integer year, final String country) {
         orchestrator.getSessions(sessionType, year, country);
+    }
+
+    public static class InvalidCountryCodeException extends RuntimeException {
+        public InvalidCountryCodeException(String message) {
+            super(message);
+        }
     }
 }

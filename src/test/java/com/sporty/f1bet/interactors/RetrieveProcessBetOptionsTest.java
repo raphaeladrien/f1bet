@@ -32,9 +32,9 @@ public class RetrieveProcessBetOptionsTest {
         when(sessionRepository.findBySessionTypeAndYearAndCountry(any(), any(), any(), any(Pageable.class)))
                 .thenReturn(Page.empty());
 
-        retrieveBetOptions.execute("RACE", 2024, "Italy", 0, 10);
+        retrieveBetOptions.execute("RACE", 2024, "BRA", 0, 10);
 
-        verify(orchestrator).getSessions("RACE", 2024, "Italy");
+        verify(orchestrator).getSessions("RACE", 2024, "BRA");
     }
 
     @Test
@@ -43,7 +43,7 @@ public class RetrieveProcessBetOptionsTest {
         when(sessionRepository.findBySessionTypeAndYearAndCountry(any(), any(), any(), any(Pageable.class)))
                 .thenReturn(Page.empty());
 
-        final BetOptionsResponse response = retrieveBetOptions.execute("RACE", 2024, "Italy", 0, 10);
+        final BetOptionsResponse response = retrieveBetOptions.execute("RACE", 2024, "BRA", 0, 10);
 
         assertNotNull(response);
         assertTrue(response.getSessionResponse().isEmpty());

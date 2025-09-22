@@ -3,15 +3,17 @@ package com.sporty.f1bet.controller.exception;
 import static org.springframework.http.HttpStatus.*;
 
 import com.sporty.f1bet.interactors.ProcessBet;
+import com.sporty.f1bet.interactors.RetrieveBetOptions;
 import com.sporty.f1bet.interactors.SaveEventOutcome;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 @ControllerAdvice
-public class DefaultExceptionHandler {
+public class DefaultExceptionHandler extends ResponseEntityExceptionHandler {
 
     private static final Logger logger = LoggerFactory.getLogger(DefaultExceptionHandler.class);
 
@@ -88,5 +90,19 @@ public class DefaultExceptionHandler {
         if (logger.isErrorEnabled()) logger.error(ex.getMessage(), ex);
 
         return ResponseEntity.status(FORBIDDEN).body(new ApiError(title, status, detail, instance));
+    }
+
+    @ExceptionHandler(RetrieveBetOptions.InvalidCountryCodeException.class)
+    public ResponseEntity<ApiError> handleInvalidCountryCodeException(
+            RetrieveBetOptions.InvalidCountryCodeException ex) {
+        final String title = "Invalid Country Code";
+        final int status = BAD_REQUEST.value();
+        final String detail = "Invalid country code: 'XYZ'. Please provide a valid ISO 3166-1 alpha-3 "
+                + "code (e.g., 'USA', 'PRT', 'BRA').";
+        final String instance = "/api/v1/events";
+
+        if (logger.isErrorEnabled()) logger.error(ex.getMessage(), ex);
+
+        return ResponseEntity.status(BAD_REQUEST).body(new ApiError(title, status, detail, instance));
     }
 }

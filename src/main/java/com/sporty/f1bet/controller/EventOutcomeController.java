@@ -52,6 +52,13 @@ public class EventOutcomeController {
                         content =
                                 @Content(
                                         mediaType = "application/json",
+                                        schema = @Schema(implementation = ApiError.class))),
+                @ApiResponse(
+                        responseCode = "400",
+                        description = "Bad request",
+                        content =
+                                @Content(
+                                        mediaType = "application/json",
                                         schema = @Schema(implementation = ApiError.class)))
             })
     public ResponseEntity<GenericResponse> saveResult(

@@ -42,6 +42,13 @@ public class F1RaceOddsController {
                         content =
                                 @Content(
                                         mediaType = "application/json",
+                                        schema = @Schema(implementation = ApiError.class))),
+                @ApiResponse(
+                        responseCode = "400",
+                        description = "Bad request",
+                        content =
+                                @Content(
+                                        mediaType = "application/json",
                                         schema = @Schema(implementation = ApiError.class)))
             })
     public ResponseEntity<BetOptionsResponse> sessions(
@@ -87,6 +94,13 @@ public class F1RaceOddsController {
                 @ApiResponse(
                         responseCode = "402",
                         description = "Insufficient funds",
+                        content =
+                                @Content(
+                                        mediaType = "application/json",
+                                        schema = @Schema(implementation = ApiError.class))),
+                @ApiResponse(
+                        responseCode = "400",
+                        description = "Bad request",
                         content =
                                 @Content(
                                         mediaType = "application/json",
